@@ -1,7 +1,7 @@
 {
   "name": "DRmail",
   "version": "1.0.1",
-  "description": "Never regret sending emails. It stops you from sending emails that might give negative feelings.",
+  "description": "Never regret sending emails. DRmail stops you from sending emails that might leave a negative impression.",
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],

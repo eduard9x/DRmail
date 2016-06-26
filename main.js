@@ -18,6 +18,13 @@ function confirmSave(notification){
      }
 };
 
+function strip(html)
+{
+   var tmp = document.createElement("DIV");
+   tmp.innerHTML = html;
+   return tmp.textContent||tmp.innerText;
+}
+
 
 function MoodyChecker(message){
   $.ajax({
@@ -36,7 +43,7 @@ function MoodyChecker(message){
       result = parseInt(result * 1000) / 10;
 
       if(result > 50) {
-        confirm('This seems to me as: ' + result + '% positive. ');
+        console.log('This seems to me as: ' + result + '% positive. ');
       }else{
         var notification = "The positivity in this email is down to " + result + "%. Would you rather undo this email, take a short break and resend it afterwards?";
         confirmSave(notification);
@@ -54,9 +61,8 @@ var main = function(){
 
 gmail.observe.before('send_message', function(url, body, data, xhr){
   var message = data.body;
-	var first = '<div dir="ltr">';
-  var last = '</div>';
-  message = message.substring(message.lastIndexOf(first)+first.length, message.lastIndexOf(last));
+  message = strip(message);
+  message = message.replace(/["']/g, "");
   console.log('message was:', message);
   MoodyChecker(message);
 });
