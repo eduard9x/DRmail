@@ -8,6 +8,17 @@ function refresh(f) {
   }
 }
 
+function confirmSave(notification){
+      var answer = confirm(notification);
+      if (answer){
+        console.log("message undo = TRUE");
+        document.getElementById('link_undo').click();
+      }else{
+        console.log("No changes");
+     }
+};
+
+
 function MoodyChecker(message){
   $.ajax({
       url: "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment",
@@ -23,7 +34,14 @@ function MoodyChecker(message){
   .done(function(data) {
       var result = data.documents[0].score;
       result = parseInt(result * 1000) / 10;
-      alert('This seems to me as: ' + result + '% positive');
+
+      if(result > 50) {
+        confirm('This seems to me as: ' + result + '% positive. ');
+      }else{
+        var notification = "The positivity in this email is down to " + result + "%. Would you rather undo this email, take a short break and resend it afterwards?";
+        confirmSave(notification);
+      }
+
   })
   .fail(function() {
     alert('Something went wrong. Please try again.');
@@ -39,7 +57,12 @@ gmail.observe.before('send_message', function(url, body, data, xhr){
 	var first = '<div dir="ltr">';
   var last = '</div>';
   message = message.substring(message.lastIndexOf(first)+first.length, message.lastIndexOf(last));
+  console.log('message was:', message);
   MoodyChecker(message);
+});
+
+gmail.observe.after('send_message', function(url, body, data, xhr){
+  console.log("Message has been sent");
 });
 
 }

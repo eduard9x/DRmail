@@ -1,7 +1,7 @@
 {
-  "name": "Gmail.js",
-  "version": "0.1",
-  "description": "Hello World Gmail chrome extension",
+  "name": "DRmail",
+  "version": "1.0.1",
+  "description": "Never regret sending emails. It stops you from sending emails that might give negative feelings.",
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
