@@ -8,13 +8,15 @@ function refresh(f) {
   }
 }
 
-function confirmSave(notification){
+function confirmSave(notification, result){
+  console.log('This seems to me as: ' + result + '% positive. ');
+
       var answer = confirm(notification);
       if (answer){
         console.log("message undo = TRUE");
         document.getElementById('link_undo').click();
       }else{
-        console.log("No changes");
+        console.log("message undo = FALSE");
      }
 };
 
@@ -45,8 +47,8 @@ function MoodyChecker(message){
       if(result > 50) {
         console.log('This seems to me as: ' + result + '% positive. ');
       }else{
-        var notification = "The positivity in this email is down to " + result + "%. Would you rather undo this email, take a short break and resend it afterwards?";
-        confirmSave(notification);
+        var notification = "Hi, this email might not leave a positive impression. Would you rather undo it, have a short break and write a friendlier email afterwards?";
+        confirmSave(notification, result);
       }
 
   })
